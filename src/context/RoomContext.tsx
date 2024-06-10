@@ -5,7 +5,7 @@ import Peer from "peerjs";
 import {v4 as uuidV4} from "uuid";
 import {PeersReducer} from "./PeerReducer";
 import { addPeerAction, removePeerAction } from "./PeerActions";
-const WS = 'localhost:8080'
+const WS = '192.168.10.22:8080'
 
 
 export const RoomContext = createContext<null | any>(null);
