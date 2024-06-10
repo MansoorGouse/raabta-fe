@@ -13,9 +13,9 @@ export const Room = ()=>{
     return(<>
         Hello to {id}
         <div className="grid grid-cols-4 gap-4">
-        <VideoPlayer stream={stream}/>
+        <VideoPlayer stream={stream} muted={true}/>
         {Object.values(peers as PeerState).map((peer) =>{
-           return peer.stream && <VideoPlayer stream={peer.stream}/>
+           return peer.stream && <VideoPlayer stream={peer.stream} muted={false}/>
         })}
         </div>
         </>)
