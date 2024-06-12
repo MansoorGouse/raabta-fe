@@ -5,8 +5,8 @@ import Peer from "peerjs";
 import {v4 as uuidV4} from "uuid";
 import {PeersReducer} from "./PeerReducer";
 import { addPeerAction, removePeerAction } from "./PeerActions";
-// const WS = 'http://13.49.227.240:80'
-const WS='https://2e1a-183-82-4-110.ngrok-free.app'
+const WS = 'http://13.49.227.240:80'
+// const WS='https://2e1a-183-82-4-110.ngrok-free.app'
 
 
 export const RoomContext = createContext<null | any>(null);
