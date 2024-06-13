@@ -20,6 +20,7 @@ export const RoomProvider: React.FC<RoomProviderProps> = (props) => {
     const { children } = props;
     const navigate = useNavigate();
     const [me,setMe] = useState<Peer>();
+    const [muteAudio,setMuteAudio] = useState<Boolean>(false);
     const [stream,setStream] = useState<MediaStream>();
     const [peers,dispatch] = useReducer(PeersReducer,{});
 
@@ -45,13 +46,13 @@ export const RoomProvider: React.FC<RoomProviderProps> = (props) => {
             ]} /* Sample servers, please use appropriate ones */
           });
         setMe(peer);
-        navigator.mediaDevices.getUserMedia({video:true,audio:true}).then((stream)=>{
+        navigator.mediaDevices.getUserMedia({video:true,audio:!muteAudio}).then((stream)=>{
             setStream(stream)
         })
         ws.on("room-created",enterRoom)
         ws.on("get-users",handleGetUsers)
         ws.on("user-disconnected",removePeer);
-    },[])
+    },[muteAudio])
 
     useEffect(()=>{
         if(!me) return;
@@ -78,7 +79,7 @@ export const RoomProvider: React.FC<RoomProviderProps> = (props) => {
     },[me, stream])
     console.log({peers})
     return (
-        <RoomContext.Provider value={{ ws , me, stream,peers}}>
+        <RoomContext.Provider value={{ ws , me, stream,peers,muteAudio,setMuteAudio}}>
             {children}
         </RoomContext.Provider>
     );
