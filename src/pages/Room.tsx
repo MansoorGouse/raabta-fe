@@ -14,12 +14,12 @@ export const Room = ()=>{
     
     return(<>
         Hello to {id}
-        <div className={`grid grid-cols-${Math.min(Object.keys(peers).length + 1, 4)} gap-4`}>
-                {stream && <VideoPlayer stream={stream} muted={true} />}
-                {Object.values(peers).map((peer: any) => peer.stream && (
-                    <VideoPlayer key={peer.id} stream={peer.stream} muted={false} />
-                ))}
-            </div>
+        <div className="grid grid-cols-4 gap-4">
+        <VideoPlayer stream={stream} muted={true}/>
+        {Object.values(peers as PeerState).map((peer) =>{
+           return peer.stream && <VideoPlayer stream={peer.stream} muted={false}/>
+        })}
+        </div>
         <div>
             <button style={{
                 position:'fixed',
