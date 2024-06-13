@@ -62,7 +62,7 @@ export const RoomProvider: React.FC<RoomProviderProps> = (props) => {
          else{
             stream?.getAudioTracks().forEach(track => track.enabled = true);
           }
-    },[muteAudio])
+    },[muteAudio, stream])
 
 
     useEffect(()=>{
@@ -89,7 +89,7 @@ export const RoomProvider: React.FC<RoomProviderProps> = (props) => {
     },[me, stream])
     console.log({peers})
     return (
-        <RoomContext.Provider value={{ ws , me, stream,peers,muteAudio,setMuteAudio}}>
+        <RoomContext.Provider value={{ ws , me, stream,peers,muteAudio,setMuteAudio,setStream}}>
             {children}
         </RoomContext.Provider>
     );
