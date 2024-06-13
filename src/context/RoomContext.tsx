@@ -46,12 +46,16 @@ export const RoomProvider: React.FC<RoomProviderProps> = (props) => {
             ]} /* Sample servers, please use appropriate ones */
           });
         setMe(peer);
-        navigator.mediaDevices.getUserMedia({video:true,audio:!muteAudio}).then((stream)=>{
-            setStream(stream)
-        })
+        
         ws.on("room-created",enterRoom)
         ws.on("get-users",handleGetUsers)
         ws.on("user-disconnected",removePeer);
+    },[])
+    useEffect(()=>{
+        console.log(muteAudio)
+        navigator.mediaDevices.getUserMedia({video:true,audio:!muteAudio}).then((stream)=>{
+            setStream(stream)
+        })
     },[muteAudio])
 
     useEffect(()=>{
