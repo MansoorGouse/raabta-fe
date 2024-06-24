@@ -28,12 +28,12 @@ export const Room = ()=>{
             <div className="flex grow">
                     {screenSharingId && (
                         <div className="w-4/5 pr-4 bg-gray-500 p-4">
-                            <VideoPlayer stream={screenStream} muted={muteAudio}/>
+                            <VideoPlayer stream={screenSharingVideo} muted={muteAudio}/>
                         </div>
                     )}
                     <div
                         className={`grid gap-4 ${
-                            screenStream ? "w-1/5 grid-col-1" : "grid-cols-4"
+                            stream ? "w-1/5 grid-col-1" : "grid-cols-4"
                         }`}
                     >
                         {stream && (

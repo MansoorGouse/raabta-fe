@@ -7,6 +7,7 @@ import { PeersReducer } from "./PeerReducer";
 import { addPeerAction, removePeerAction } from "./PeerActions";
 
 const WS = 'http://13.49.227.240:80';
+// const WS='http://localhost:8080';
 
 export const RoomContext = createContext<null | any>(null);
 
@@ -87,11 +88,28 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
             setStream(stream);
         });
-
+        ws.on('connect', () => {
+            // console.log('Socket.IO connection established');
+    
+            // if(stream){
+            //     const mediaRecorder = new MediaRecorder(stream);
+            //     mediaRecorder.ondataavailable = (event: BlobEvent) => {
+            //         if (event.data.size > 0) {
+            //             event.data.arrayBuffer().then(buffer => {
+            //                 ws.emit('video-stream', buffer);
+            //             });
+            //         }
+            //     };
+        
+            //     mediaRecorder.start(1000);
+            // }
+    
+            
+        });
         ws.on("room-created", enterRoom);
         ws.on("get-users", handleGetUsers);
         ws.on("user-disconnected", removePeer);
-        ws.on("user-started-sharing", (peerId) => {
+        ws.on("user-started-sharing", ({peerId}) => {
             setScreenSharingId(peerId)
             console.log("user-started-shring",peerId)
     });
@@ -107,10 +125,24 @@ export const RoomProvider: React.FC<RoomProviderProps> = ({ children }) => {
             me?.disconnect();
         };
     }, []);
+    useEffect(()=>{
+        if(stream){
+            // const mediaRecorder = new MediaRecorder(stream);
+            // mediaRecorder.ondataavailable = (event: BlobEvent) => {
+            //     if (event.data.size > 0) {
+            //         event.data.arrayBuffer().then(buffer => {
+            //             ws.emit('video-stream', buffer);
+            //         });
+            //     }
+            // };
+    
+            // mediaRecorder.start(1000);
+        }
+    },[stream])
 
     useEffect(() => {
         console.log("scrrenSharingId",screenSharingId)
-        if (screenSharingId) {
+        if (screenSharingId === me?.id) {
             console.log("here");
             ws.emit("start-sharing", { peerId: screenSharingId, roomId });
         } else {
